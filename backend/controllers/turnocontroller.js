@@ -1,49 +1,185 @@
 const servicio = require("./turnoservice");
 
-exports.listar = (req, res) => {
-  servicio.obtenerTurnos((err, datos) => {
-    if (err) return res.status(500).json(err);
-    res.json(datos);
-  });
-};
+/* ==========================================
+   LICENCIA NUEVA
+========================================== */
 
-exports.obtener = (req, res) => {
-  servicio.obtenerTurnoPorId(req.params.id, (err, datos) => {
-    if (err) return res.status(500).json(err);
-    res.json(datos[0]);
-  });
-};
+exports.obtenerLicencias = (req, res) => {
 
-exports.crear = (req, res) => {
-  servicio.crearTurno(req.body, (err) => {
-    if (err) return res.status(500).json(err);
+    servicio.obtenerLicencias((err, datos) => {
 
-    res.json({
-      mensaje: "Turno creado correctamente",
+        if (err) {
+            return res.status(500).json({
+                mensaje: "Error al obtener las licencias",
+                error: err
+            });
+        }
+
+        res.json(datos);
+
     });
-  });
+
 };
 
-exports.actualizarEstado = (req, res) => {
-  servicio.actualizarEstado(
-    req.params.id,
-    req.body.estado,
-    (err) => {
-      if (err) return res.status(500).json(err);
+exports.crearLicencia = (req, res) => {
 
-      res.json({
-        mensaje: "Estado actualizado",
-      });
-    }
-  );
-};
+    servicio.crearLicencia(req.body, (err, resultado) => {
 
-exports.eliminar = (req, res) => {
-  servicio.eliminarTurno(req.params.id, (err) => {
-    if (err) return res.status(500).json(err);
+        if (err) {
+            return res.status(500).json({
+                mensaje: "Error al crear la licencia",
+                error: err
+            });
+        }
 
-    res.json({
-      mensaje: "Turno eliminado",
+        res.status(201).json({
+            mensaje: "Turno para Licencia Nueva registrado correctamente",
+            id: resultado.insertId
+        });
+
     });
-  });
+
+};
+
+exports.eliminarLicencia = (req, res) => {
+
+    servicio.eliminarLicencia(req.params.id, (err) => {
+
+        if (err) {
+            return res.status(500).json({
+                mensaje: "Error al eliminar",
+                error: err
+            });
+        }
+
+        res.json({
+            mensaje: "Turno eliminado correctamente"
+        });
+
+    });
+
+};
+
+
+
+/* ==========================================
+   RENOVACIONES
+========================================== */
+
+exports.obtenerRenovaciones = (req, res) => {
+
+    servicio.obtenerRenovaciones((err, datos) => {
+
+        if (err) {
+            return res.status(500).json({
+                mensaje: "Error al obtener renovaciones",
+                error: err
+            });
+        }
+
+        res.json(datos);
+
+    });
+
+};
+
+exports.crearRenovacion = (req, res) => {
+
+    servicio.crearRenovacion(req.body, (err, resultado) => {
+
+        if (err) {
+            return res.status(500).json({
+                mensaje: "Error al crear renovación",
+                error: err
+            });
+        }
+
+        res.status(201).json({
+            mensaje: "Renovación registrada correctamente",
+            id: resultado.insertId
+        });
+
+    });
+
+};
+
+exports.eliminarRenovacion = (req, res) => {
+
+    servicio.eliminarRenovacion(req.params.id, (err) => {
+
+        if (err) {
+            return res.status(500).json({
+                mensaje: "Error al eliminar renovación",
+                error: err
+            });
+        }
+
+        res.json({
+            mensaje: "Renovación eliminada"
+        });
+
+    });
+
+};
+
+
+
+/* ==========================================
+   ESTUDIOS MÉDICOS
+========================================== */
+
+exports.obtenerEstudios = (req, res) => {
+
+    servicio.obtenerEstudios((err, datos) => {
+
+        if (err) {
+            return res.status(500).json({
+                mensaje: "Error al obtener estudios",
+                error: err
+            });
+        }
+
+        res.json(datos);
+
+    });
+
+};
+
+exports.crearEstudio = (req, res) => {
+
+    servicio.crearEstudio(req.body, (err, resultado) => {
+
+        if (err) {
+            return res.status(500).json({
+                mensaje: "Error al crear estudio",
+                error: err
+            });
+        }
+
+        res.status(201).json({
+            mensaje: "Estudio médico registrado correctamente",
+            id: resultado.insertId
+        });
+
+    });
+
+};
+
+exports.eliminarEstudio = (req, res) => {
+
+    servicio.eliminarEstudio(req.params.id, (err) => {
+
+        if (err) {
+            return res.status(500).json({
+                mensaje: "Error al eliminar estudio",
+                error: err
+            });
+        }
+
+        res.json({
+            mensaje: "Estudio eliminado correctamente"
+        });
+
+    });
+
 };

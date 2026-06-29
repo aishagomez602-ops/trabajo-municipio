@@ -1,4 +1,5 @@
 const express = require("express");
+
 const verificarToken = require("../middleware/authMiddleware");
 const verificarAdmin = require("../middleware/adminMiddleware");
 
@@ -12,44 +13,132 @@ const {
     registro
 } = require("../controllers/controller");
 
-// Controlador de turnos
 const turno = require("../controllers/turnocontroller");
 
 const router = express.Router();
 
 
-// =======================
-// USUARIOS
-// =======================
-
-router.get("/usuarios/:id", verificarToken, verificarAdmin, buscarUsuarios);
-router.get("/usuarios", verificarToken, verificarAdmin, obtenerUsuarios);
-router.post("/usuarios", verificarToken, verificarAdmin, crearUsuario);
-router.put("/usuarios/:id", verificarToken, verificarAdmin, actualizarUsuario);
-router.delete("/usuarios/:id", verificarToken, verificarAdmin, eliminarUsuario);
-
-
-// =======================
-// LOGIN
-// =======================
+/* ==========================================
+   LOGIN
+========================================== */
 
 router.post("/login", login);
 router.post("/registro", registro);
 
 
-// =======================
-// TURNOS LICENCIA
-// =======================
+/* ==========================================
+   USUARIOS
+========================================== */
 
-router.get("/turnos", verificarToken, turno.listar);
+router.get(
+    "/usuarios",
+    verificarToken,
+    verificarAdmin,
+    obtenerUsuarios
+);
 
-router.get("/turnos/:id", verificarToken, turno.obtener);
+router.get(
+    "/usuarios/:id",
+    verificarToken,
+    verificarAdmin,
+    buscarUsuarios
+);
 
-router.post("/turnos", verificarToken, turno.crear);
+router.post(
+    "/usuarios",
+    verificarToken,
+    verificarAdmin,
+    crearUsuario
+);
 
-router.put("/turnos/:id", verificarToken, turno.actualizarEstado);
+router.put(
+    "/usuarios/:id",
+    verificarToken,
+    verificarAdmin,
+    actualizarUsuario
+);
 
-router.delete("/turnos/:id", verificarToken, turno.eliminar);
+router.delete(
+    "/usuarios/:id",
+    verificarToken,
+    verificarAdmin,
+    eliminarUsuario
+);
+
+
+
+/* ==========================================
+   LICENCIA NUEVA
+========================================== */
+
+// Obtener todos los turnos
+router.get(
+    "/licencias",
+    verificarToken,
+    turno.obtenerLicencias
+);
+
+// Crear turno
+router.post(
+    "/licencias",
+    verificarToken,
+    turno.crearLicencia
+);
+
+// Eliminar turno
+router.delete(
+    "/licencias/:id",
+    verificarToken,
+    turno.eliminarLicencia
+);
+
+
+
+/* ==========================================
+   RENOVACIONES
+========================================== */
+
+router.get(
+    "/renovaciones",
+    verificarToken,
+    turno.obtenerRenovaciones
+);
+
+router.post(
+    "/renovaciones",
+    verificarToken,
+    turno.crearRenovacion
+);
+
+router.delete(
+    "/renovaciones/:id",
+    verificarToken,
+    turno.eliminarRenovacion
+);
+
+
+
+/* ==========================================
+   ESTUDIOS MÉDICOS
+========================================== */
+
+router.get(
+    "/estudios",
+    verificarToken,
+    turno.obtenerEstudios
+);
+
+router.post(
+    "/estudios",
+    verificarToken,
+    turno.crearEstudio
+);
+
+router.delete(
+    "/estudios/:id",
+    verificarToken,
+    turno.eliminarEstudio
+);
 
 
 module.exports = router;
