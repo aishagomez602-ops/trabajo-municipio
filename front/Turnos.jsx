@@ -149,6 +149,7 @@ export default function Turnos() {
                 <option>Examen Teórico</option>
                 <option>Examen Práctico</option>
                 <option>Control de Vista</option>
+                <option>Licencia Nueva</option>
               </select>
             </label>
 
